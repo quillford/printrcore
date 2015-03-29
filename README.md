@@ -20,3 +20,19 @@ For the stock printrbot simple 1405:
 * Z Rods diameter: 8
 * Z threaded rods: true
 * Stepper motors type: nema17
+
+# Reused Vitamins
+* Rods
+* Power supply
+* Printrboard
+* endstops
+* Z probe
+* bed
+* Hotend
+* Extruder
+* Motors
+* LM8UU Bearings
+* Fan
+
+# Things to note
+* The X axis endstop will need to be extended
