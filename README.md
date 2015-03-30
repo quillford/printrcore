@@ -34,5 +34,13 @@ For the stock printrbot simple 1405:
 * LM8UU Bearings
 * Fan
 
-# Things to note
-* The X axis endstop will need to be extended
+# New Vitamins
+* Bowden push fit connectors
+* Bowden tube
+* GT2 Belt (longer than stock printrbot)
+* 608zz bearings
+* Wood (for frame)
+* Heated bed (optional but recommended)
+
+# Build Notes
+* The X axis endstop wires will need to be extended.
