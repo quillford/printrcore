@@ -16,8 +16,8 @@ For the stock printrbot simple 1405:
 * Print height: 100
 * Print depth: 100
 * Box Wood thickness: whatever you are using
-* X Y Rods diameter: 8
-* Z Rods diameter: 8
+* X Y Rods diameter: 9
+* Z Rods diameter: 9
 * Z threaded rods: true
 * Stepper motors type: nema17
 
@@ -29,7 +29,7 @@ For the stock printrbot simple 1405:
 * Z probe
 * bed
 * Hotend
-* Extruder
+* Extruder (Possibly)
 * Motors
 * LM8UU Bearings
 * Fan
