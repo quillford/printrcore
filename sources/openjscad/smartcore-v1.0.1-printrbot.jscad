@@ -79,9 +79,9 @@ function getParameterDefinitions() {
     },
     { name: '_globalResolution', caption: 'output resolution (16, 24, 32)', type: 'int', initial: 8 },
 
-    { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 200 },
-    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
-    { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 200 },
+    { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 110 },
+    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 100 },
+    { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 9},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 9},
