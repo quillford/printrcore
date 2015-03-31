@@ -85,6 +85,7 @@ function getParameterDefinitions() {
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 9},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 9},
+    { name: '_BearingDiam', caption: 'Bearing Diameter (15 or 16):', type: 'int', initial: 15},
     { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 1, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
 
 
@@ -1398,8 +1399,10 @@ function main(params){
     if(_XYrodsDiam==8){ _XYlmDiam = 15;}
     if(_XYrodsDiam==9){ _XYlmDiam = 15;}
     if(_ZrodsDiam==6){ _ZlmDiam = 12;}
-    if(_ZrodsDiam==8){ _ZlmDiam = 15;}
-    if(_ZrodsDiam==9){ _ZlmDiam = 15;}
+    // if(_ZrodsDiam==8){ _ZlmDiam = 15;}
+    // if(_ZrodsDiam==9){ _ZlmDiam = 15;}
+    if(_ZrodsDiam==8){ _ZlmDiam = _BearingDiam;}
+    if(_ZrodsDiam==9){ _ZlmDiam = _BearingDiam;}
     if(_ZrodsDiam==10){ _ZlmDiam = 19;}
     if(_ZrodsDiam==12){ _ZlmDiam = 21;}
 
