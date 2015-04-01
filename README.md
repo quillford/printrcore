@@ -22,7 +22,7 @@ For the stock printrbot simple 1405:
 * Stepper motors type: nema17
 
 # Reused Vitamins
-* Rods
+* Smooth Rods
 * Power supply
 * Printrboard
 * endstops
@@ -41,6 +41,11 @@ For the stock printrbot simple 1405:
 * 608zz bearings
 * Wood (for frame)
 * Heated bed (optional but recommended)
+
+# Extra Printed Parts
+You will need these extra printed parts to complete this build/conversion.
+
+* [JHead to Ubis adapter](https://github.com/lordofhyphens/jheadtoubis/blob/master/ubis_jhead_adapter_bracket.stl)
 
 # Build Notes
 * The X axis endstop wires will need to be extended.
