@@ -49,6 +49,6 @@ For the stock printrbot simple 1405:
 This is an optional but recommended upgrade for the Printrbot/Smartcore.
 
 Sources:
-[Amazon - Silicon Heater](http://www.amazon.com/100x100mm-Silicone-Rubber-Heater-Printer/dp/B00I50G4O8)
-[Official Printrbot heated bed](http://printrbot.com/shop/heated-bed-upgrade-for-makers-kit-1405/)
-[Ebay - PCB Heater](http://www.ebay.com/itm/Prewired-Heatbed-For-Printrbot-Simple-4-65-X-7-25-Heated-Bed-for-3D-Printing-/251620873437?pt=LH_DefaultDomain_0&hash=item3a95c5d4dd)
+* [Amazon - Silicon Heater](http://www.amazon.com/100x100mm-Silicone-Rubber-Heater-Printer/dp/B00I50G4O8)
+* [Official Printrbot heated bed](http://printrbot.com/shop/heated-bed-upgrade-for-makers-kit-1405/)
+* [Ebay - PCB Heater](http://www.ebay.com/itm/Prewired-Heatbed-For-Printrbot-Simple-4-65-X-7-25-Heated-Bed-for-3D-Printing-/251620873437?pt=LH_DefaultDomain_0&hash=item3a95c5d4dd)
