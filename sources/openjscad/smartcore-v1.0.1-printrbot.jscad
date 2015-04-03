@@ -28,7 +28,7 @@ var _ZrodsDiam; // usually 6, 8, 10 or 12
 var _ZlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
 var _nemaXYZ;  // nema 14 , nema 17
 var _XrodsWidth=40; //space between rods on X axis
-var _ZrodsWidth=103; //space between rods on Z axis 
+var _ZrodsWidth=103; //space between rods on Z axis
 var _extrusionType = 0; // 0 bowden 1 direct
 var XrodLength = 300; // will be calculated in main from parameters.
 var YrodLength = 300; // will be calculated in main from parameters.
@@ -83,16 +83,9 @@ function getParameterDefinitions() {
     { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
     { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
-<<<<<<< HEAD
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'float', initial: 8.1},
     { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 1, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
-=======
-    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 9},
-    { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 9},
-    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
->>>>>>> cb4c2e0c9e3d040fb4cb5381a93c3b893070e6c1
-
 
     {name: '_nemaXYZ',
       type: 'choice',
