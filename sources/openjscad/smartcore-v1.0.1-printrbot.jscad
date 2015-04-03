@@ -28,7 +28,7 @@ var _ZrodsDiam; // usually 6, 8, 10 or 12
 var _ZlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
 var _nemaXYZ;  // nema 14 , nema 17
 var _XrodsWidth=40; //space between rods on X axis
-var _ZrodsWidth=60; //space between rods on Z axis
+var _ZrodsWidth=103; //space between rods on Z axis 
 var _extrusionType = 0; // 0 bowden 1 direct
 var XrodLength = 300; // will be calculated in main from parameters.
 var YrodLength = 300; // will be calculated in main from parameters.
@@ -80,12 +80,12 @@ function getParameterDefinitions() {
     { name: '_globalResolution', caption: 'output resolution (16, 24, 32)', type: 'int', initial: 8 },
 
     { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 110 },
-    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 100 },
+    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
     { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 9},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 9},
-    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 1, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
 
 
     {name: '_nemaXYZ',
@@ -364,10 +364,10 @@ function slideZ2(){
 			//cylinder({r:2.4,h:10,fn:_globalResolution}).rotateX(83).rotateZ(5).translate([0,-7,10]),
 			//cylinder({r:2.4,h:10,fn:_globalResolution}).rotateX(83).rotateZ(-5).translate([_ZrodsWidth,-7,10]),
 			// top holes
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-40,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-40,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([1.5,-49,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([-1.5+_ZrodsWidth,-49,height-30]),
 			// special hole in gt2 holder to be able to get the belt out .. but still printable vertically.
 				linear_extrude({height:20},polygon({points:[[0,0],[6,0],[4,10],[2,10]]})).rotateY(-90).translate([width/2+5,-10,height-15])
 			);
