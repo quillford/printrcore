@@ -83,9 +83,15 @@ function getParameterDefinitions() {
     { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
     { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
+<<<<<<< HEAD
+    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
+    { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'float', initial: 8.1},
+    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 1, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+=======
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 9},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 9},
     { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+>>>>>>> cb4c2e0c9e3d040fb4cb5381a93c3b893070e6c1
 
 
     {name: '_nemaXYZ',
@@ -1395,11 +1401,9 @@ function main(params){
     _extrusionType = 1;
     // update calculated values
     if(_XYrodsDiam==6){ _XYlmDiam = 12;}
-    if(_XYrodsDiam==8){ _XYlmDiam = 15;}
-    if(_XYrodsDiam==9){ _XYlmDiam = 15;}
+    if(_XYrodsDiam>=8){ _XYlmDiam = 15;}
     if(_ZrodsDiam==6){ _ZlmDiam = 12;}
-    if(_ZrodsDiam==8){ _ZlmDiam = 15;}
-    if(_ZrodsDiam==9){ _ZlmDiam = 15;}
+    if(_ZrodsDiam>=8){ _ZlmDiam = 15;}
     if(_ZrodsDiam==10){ _ZlmDiam = 19;}
     if(_ZrodsDiam==12){ _ZlmDiam = 21;}
 
