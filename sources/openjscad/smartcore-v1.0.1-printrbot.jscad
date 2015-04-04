@@ -86,7 +86,7 @@ function getParameterDefinitions() {
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'float', initial: 8.1},
-    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 1, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
     { name: '_probeDiam', caption: 'Z probe diameter:', type: 'float', initial: 12.1},
 
     {name: '_nemaXYZ',
