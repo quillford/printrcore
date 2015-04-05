@@ -43,9 +43,13 @@ For the stock printrbot simple 1405:
 * Heated bed (optional but recommended)
 
 # Extra Printed Parts
-You will need these extra printed parts to complete this build/conversion.
+Needed:
 
 * [JHead to Ubis adapter](https://github.com/lordofhyphens/jheadtoubis/blob/master/ubis_jhead_adapter_bracket.stl)
+
+Optional:
+
+* [Printrboard cover](http://www.thingiverse.com/thing:278789/#files)
 
 # Build Notes
 * The X axis endstop wires will need to be extended.
