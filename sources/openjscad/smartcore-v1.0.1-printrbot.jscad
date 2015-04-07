@@ -286,14 +286,14 @@ function slideZ2(){
 				cube([7,60,height]).translate([_ZrodsWidth-3.5,-55,0]).setColor(0.2,0.7,0.2),
 
             	// nut holder
-				cube([30,20,15]).translate([15,-20,height-15]).setColor(0.2,0.8,0.2)
+				cube([30,20,15]).translate([width/2 - 15,-20,height-15]).setColor(0.2,0.8,0.2)
 
 			),
 			// nut hole
-			cylinder({r:nutRadius, h:20, fn: 6}).translate([30,-10,height-25]),
-    		cylinder({r:12/2, h:height,fn: _globalResolution}).translate([30,-10,0]),
+			cylinder({r:nutRadius, h:20, fn: 6}).translate([width/2,-10,height-25]),
+    		cylinder({r:12/2, h:height,fn: _globalResolution}).translate([width/2,-10,0]),
 			//nut set nut hole
-			cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([30,15,height-10]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([width/2,15,height-10]),
 
 			//  boolean front horizontal
 			cylinder({r:60,h:width+40,fn:_globalResolution}).rotateY(90).translate([-20,-60,-25]),
@@ -311,10 +311,10 @@ function slideZ2(){
         cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([-set_screw_offset,20,height-10]),
         cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([-set_screw_offset,20,10]),
 			// top holes
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-40,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-40,height-30])
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([1.5,-49,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([-1.5+_ZrodsWidth,-49,height-30])
 		);
 		} else {
 		return difference(
@@ -333,8 +333,8 @@ function slideZ2(){
             cube({size:[side_form_size,10,height]}).translate([-side_form_size,-4,0]).setColor(0.2,0.7,0.2),
 
 				// extra forms front bearings holes
-				cube([7,60,height]).translate([-3.5,-55,0]).setColor(0.2,0.7,0.2),
-				cube([7,60,height]).translate([_ZrodsWidth-3.5,-55,0]).setColor(0.2,0.7,0.2)
+				cube([4+7,60,height]).translate([-3.5,-55,0]).setColor(0.2,0.7,0.2),
+				cube([4+7,60,height]).translate([_ZrodsWidth-3.5-3,-55,0]).setColor(0.2,0.7,0.2)
 
 			),
 			// big hole middle
