@@ -25,11 +25,11 @@ var _wallThickness; // box wood thickness
 var _XYrodsDiam; // usually 6 or 8 .. or 10?
 var _XYlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
 var _ZrodsDiam; // usually 6, 8, 10 or 12
-var _BearingDiam; // option to change bearing outer diameter
+var _probeDiam;
 var _ZlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
 var _nemaXYZ;  // nema 14 , nema 17
 var _XrodsWidth=40; //space between rods on X axis
-var _ZrodsWidth=60; //space between rods on Z axis
+var _ZrodsWidth=103; //space between rods on Z axis
 var _extrusionType = 0; // 0 bowden 1 direct
 var XrodLength = 300; // will be calculated in main from parameters.
 var YrodLength = 300; // will be calculated in main from parameters.
@@ -84,11 +84,10 @@ function getParameterDefinitions() {
     { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 100 },
     { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
-    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 9},
-    { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 9},
-    { name: '_BearingDiam', caption: 'Bearing Diameter (15 or 16) (only used rod if rod is M8/M9):', type: 'int', initial: 15},
-    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 1, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
-
+    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
+    { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'float', initial: 8.1},
+    { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+    { name: '_probeDiam', caption: 'Z probe diameter:', type: 'float', initial: 12.1},
 
     {name: '_nemaXYZ',
       type: 'choice',
@@ -366,10 +365,10 @@ function slideZ2(){
 			//cylinder({r:2.4,h:10,fn:_globalResolution}).rotateX(83).rotateZ(5).translate([0,-7,10]),
 			//cylinder({r:2.4,h:10,fn:_globalResolution}).rotateX(83).rotateZ(-5).translate([_ZrodsWidth,-7,10]),
 			// top holes
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-40,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-40,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([1.5,-49,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([-1.5+_ZrodsWidth,-49,height-30]),
 			// special hole in gt2 holder to be able to get the belt out .. but still printable vertically.
 				linear_extrude({height:20},polygon({points:[[0,0],[6,0],[4,10],[2,10]]})).rotateY(-90).translate([width/2+5,-10,height-15])
 			);
@@ -643,7 +642,7 @@ function InductiveSensorSupport(){
         cylinder({r:1.6,h:13,fn:_globalResolution}).rotateX(-90).translate([width/2+endxJheadAttachHolesWidth/2,0,height/2]),
 
          // inductive support hole
-         cylinder({r:9.1,h:height,fn:_globalResolution}).translate([width+10,depth/2,0]),
+         cylinder({r:_probeDiam/2,h:height,fn:_globalResolution}).translate([width+10,depth/2,0]),
          // hole screw to attach the sensor faster
          cylinder({r:1.3,h:10,fn:_globalResolution}).rotateX(-90).translate([width+10,-10,height/2])
 
@@ -1389,6 +1388,7 @@ function main(params){
     _wallThickness=params._wallThickness;
     _XYrodsDiam = params._XYrodsDiam;
     _ZrodsDiam = params._ZrodsDiam;
+    _probeDiam = params._probeDiam;
     _globalResolution = params._globalResolution;
     _nemaXYZ=parseInt(params._nemaXYZ);
     output=parseInt(params._output);
@@ -1397,13 +1397,9 @@ function main(params){
     _extrusionType = 1;
     // update calculated values
     if(_XYrodsDiam==6){ _XYlmDiam = 12;}
-    if(_XYrodsDiam==8){ _XYlmDiam = 15;}
-    if(_XYrodsDiam==9){ _XYlmDiam = 15;}
+    if(_XYrodsDiam>=8){ _XYlmDiam = 15;}
     if(_ZrodsDiam==6){ _ZlmDiam = 12;}
-    // if(_ZrodsDiam==8){ _ZlmDiam = 15;}
-    // if(_ZrodsDiam==9){ _ZlmDiam = 15;}
-    if(_ZrodsDiam==8){ _ZlmDiam = _BearingDiam;}
-    if(_ZrodsDiam==9){ _ZlmDiam = _BearingDiam;}
+    if(_ZrodsDiam>=8){ _ZlmDiam = 15;}
     if(_ZrodsDiam==10){ _ZlmDiam = 19;}
     if(_ZrodsDiam==12){ _ZlmDiam = 21;}
 
@@ -1518,7 +1514,7 @@ switch(output){
                 res.push(HeadSupportJhead().rotateZ(180).translate([headoffset+44,XaxisOffset,_globalHeight-14]));
                 res.push(fakeJhead().translate([headoffset+23,XaxisOffset-15,_globalHeight-32]).setColor(0.2,0.2,0.2));
                 // fake inductive sensor
-                res.push(cylinder({r:9,h:70,fn:_globalResolution}).translate([headoffset+57,XaxisOffset-25,_globalHeight-40]).setColor(0.2,0.2,0.2));
+                res.push(cylinder({r:_probeDiam/2,h:70,fn:_globalResolution}).translate([headoffset+57,XaxisOffset-25,_globalHeight-40]).setColor(0.2,0.2,0.2));
                 res.push(InductiveSensorSupport().translate([headoffset+2,XaxisOffset-30,_globalHeight+13]));
 
                 // nema extruder
