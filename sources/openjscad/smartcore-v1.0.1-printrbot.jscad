@@ -21,6 +21,7 @@ var _globalDepth; // exernal dimension of the all printer
 var _printableWidth;
 var _printableDepth;
 var _printableHeight;
+var _munge;
 var _wallThickness; // box wood thickness
 var _XYrodsDiam; // usually 6 or 8 .. or 10?
 var _XYlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
@@ -87,6 +88,7 @@ function getParameterDefinitions() {
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'float', initial: 8.1},
     { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+    { name: '_munge', caption: 'Add 0.5mm to Z bearing space:', type: 'choice', initial: 0, values:[0,1],captions: ["false", "true"]},
     { name: '_probeDiam', caption: 'Z probe diameter:', type: 'float', initial: 12.1},
 
     {name: '_nemaXYZ',
@@ -262,7 +264,7 @@ function slideZ2(){
     var height = 40;
     var depth = 5;
     var insideWidth = 35;
-    var lmXuu_support_r = _rodsSupportThickness + _ZlmDiam / 2;
+    var lmXuu_support_r = _rodsSupportThickness + (_ZlmDiam / 2);
     var side_plate_size = 7;
     var side_form_size = lmXuu_support_r + side_plate_size;
     // lmXuu set screws offset
@@ -1396,12 +1398,13 @@ function main(params){
     //_extrusionType = params.extrusionType;
     _extrusionType = 1;
     // update calculated values
-    if(_XYrodsDiam==6){ _XYlmDiam = 12;}
+    if(_XYrodsDiam>=6){ _XYlmDiam = 12;}
     if(_XYrodsDiam>=8){ _XYlmDiam = 15;}
-    if(_ZrodsDiam==6){ _ZlmDiam = 12;}
+    if(_ZrodsDiam>=6){ _ZlmDiam = 12;}
     if(_ZrodsDiam>=8){ _ZlmDiam = 15;}
-    if(_ZrodsDiam==10){ _ZlmDiam = 19;}
-    if(_ZrodsDiam==12){ _ZlmDiam = 21;}
+    if(_ZrodsDiam>=10){ _ZlmDiam = 19;}
+    if(_ZrodsDiam>=12){ _ZlmDiam = 21;}
+    if (_munge>0) { _ZlDiam += 0.5; }
 
 
     _globalDepth = _printableDepth + 110; // = motor support depth + bearings depth + head depth /2
