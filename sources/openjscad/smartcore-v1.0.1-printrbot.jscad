@@ -82,7 +82,7 @@ function getParameterDefinitions() {
     { name: '_globalResolution', caption: 'output resolution (16, 24, 32)', type: 'int', initial: 8 },
 
     { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 110 },
-    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 100 },
+    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
     { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
@@ -129,9 +129,9 @@ function zTopBase(width, depth, height) {
             //screw right
             slottedHole(4,8,depth).rotateX(90).rotateY(90).translate([(width)/2-9,20,0]),
             // z rod left
-            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-_ZrodsWidth/2,depth/2-15,-height/2]),
+            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-(0.5+_ZrodsWidth)/2,depth/2-15,-height/2]),
             //z rod right
-            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([_ZrodsWidth/2,depth/2-15,-height/2]),
+            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([(_ZrodsWidth+0.5)/2,depth/2-15,-height/2]),
             // chamfer
             roundBoolean2(10,height,"bl").rotateX(90).rotateZ(-90).translate([-width/2+22,-depth/2+9,-height/2]),
             roundBoolean2(10,height,"bl").rotateX(90).translate([width/2-22,-depth/2+9,-height/2])
@@ -212,9 +212,9 @@ function zBottom(){
 				 // outside form right
 				 cube({size:[13,depth,height],center:true}).translate([width/2-6.5,-5,0]),
 			// z rod left
-			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-_ZrodsWidth/2,-2,-height/2]),
+			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-(0.5+_ZrodsWidth)/2,-2,-height/2]),
 			//z rod right
-			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([_ZrodsWidth/2,-2,-height/2]),
+			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([(0.5+_ZrodsWidth)/2,-2,-height/2]),
 
 			// screws attach holes
 			cylinder({r:2,h:5,fn:_globalResolution}).rotateX(-90).translate([width/2-5,depth/2-5,0]),
@@ -1404,7 +1404,7 @@ function main(params){
     if(_ZrodsDiam>=8){ _ZlmDiam = 15;}
     if(_ZrodsDiam>=10){ _ZlmDiam = 19;}
     if(_ZrodsDiam>=12){ _ZlmDiam = 21;}
-    if (_munge>0) { _ZlDiam += 0.5; }
+    if (_munge>0) { _ZlDiam += 1.5; }
 
 
     _globalDepth = _printableDepth + 110; // = motor support depth + bearings depth + head depth /2
