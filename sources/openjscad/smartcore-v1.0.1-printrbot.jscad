@@ -21,6 +21,7 @@ var _globalDepth; // exernal dimension of the all printer
 var _printableWidth;
 var _printableDepth;
 var _printableHeight;
+var _munge;
 var _wallThickness; // box wood thickness
 var _XYrodsDiam; // usually 6 or 8 .. or 10?
 var _XYlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
@@ -81,12 +82,13 @@ function getParameterDefinitions() {
     { name: '_globalResolution', caption: 'output resolution (16, 24, 32)', type: 'int', initial: 8 },
 
     { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 110 },
-    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 100 },
+    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
     { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
     { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'float', initial: 8.1},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'float', initial: 8.1},
     { name: '_ZrodsOption', caption: 'Z threaded rods:', type: 'choice', initial: 0, values:[0,1,2],captions: ["false", "true", "true-2sides"]},
+    { name: '_munge', caption: 'Add 0.5mm to Z bearing space:', type: 'choice', initial: 0, values:[0,1],captions: ["false", "true"]},
     { name: '_probeDiam', caption: 'Z probe diameter:', type: 'float', initial: 12.1},
 
     {name: '_nemaXYZ',
@@ -127,9 +129,9 @@ function zTopBase(width, depth, height) {
             //screw right
             slottedHole(4,8,depth).rotateX(90).rotateY(90).translate([(width)/2-9,20,0]),
             // z rod left
-            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-_ZrodsWidth/2,depth/2-15,-height/2]),
+            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-(0.5+_ZrodsWidth)/2,depth/2-15,-height/2]),
             //z rod right
-            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([_ZrodsWidth/2,depth/2-15,-height/2]),
+            cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([(_ZrodsWidth+0.5)/2,depth/2-15,-height/2]),
             // chamfer
             roundBoolean2(10,height,"bl").rotateX(90).rotateZ(-90).translate([-width/2+22,-depth/2+9,-height/2]),
             roundBoolean2(10,height,"bl").rotateX(90).translate([width/2-22,-depth/2+9,-height/2])
@@ -210,9 +212,9 @@ function zBottom(){
 				 // outside form right
 				 cube({size:[13,depth,height],center:true}).translate([width/2-6.5,-5,0]),
 			// z rod left
-			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-_ZrodsWidth/2,-2,-height/2]),
+			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([-(0.5+_ZrodsWidth)/2,-2,-height/2]),
 			//z rod right
-			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([_ZrodsWidth/2,-2,-height/2]),
+			cylinder({r:_ZrodsDiam/2,h:height,fn:_globalResolution}).translate([(0.5+_ZrodsWidth)/2,-2,-height/2]),
 
 			// screws attach holes
 			cylinder({r:2,h:5,fn:_globalResolution}).rotateX(-90).translate([width/2-5,depth/2-5,0]),
@@ -262,7 +264,7 @@ function slideZ2(){
     var height = 40;
     var depth = 5;
     var insideWidth = 35;
-    var lmXuu_support_r = _rodsSupportThickness + _ZlmDiam / 2;
+    var lmXuu_support_r = _rodsSupportThickness + (_ZlmDiam / 2);
     var side_plate_size = 7;
     var side_form_size = lmXuu_support_r + side_plate_size;
     // lmXuu set screws offset
@@ -287,14 +289,14 @@ function slideZ2(){
 				cube([7,60,height]).translate([_ZrodsWidth-3.5,-55,0]).setColor(0.2,0.7,0.2),
 
             	// nut holder
-				cube([30,20,15]).translate([15,-20,height-15]).setColor(0.2,0.8,0.2)
+				cube([30,20,15]).translate([width/2 - 15,-20,height-15]).setColor(0.2,0.8,0.2)
 
 			),
 			// nut hole
-			cylinder({r:nutRadius, h:20, fn: 6}).translate([30,-10,height-25]),
-    		cylinder({r:12/2, h:height,fn: _globalResolution}).translate([30,-10,0]),
+			cylinder({r:nutRadius, h:20, fn: 6}).translate([width/2,-10,height-25]),
+    		cylinder({r:12/2, h:height,fn: _globalResolution}).translate([width/2,-10,0]),
 			//nut set nut hole
-			cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([30,15,height-10]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([width/2,15,height-10]),
 
 			//  boolean front horizontal
 			cylinder({r:60,h:width+40,fn:_globalResolution}).rotateY(90).translate([-20,-60,-25]),
@@ -312,10 +314,10 @@ function slideZ2(){
         cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([-set_screw_offset,20,height-10]),
         cylinder({r:1.4,h:30,fn:_globalResolution}).rotateX(90).translate([-set_screw_offset,20,10]),
 			// top holes
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-20,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-40,height-30]),
-			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-40,height-30])
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([0,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([_ZrodsWidth,-25,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([1.5,-49,height-30]),
+			cylinder({r:1.4,h:30,fn:_globalResolution}).translate([-1.5+_ZrodsWidth,-49,height-30])
 		);
 		} else {
 		return difference(
@@ -334,8 +336,8 @@ function slideZ2(){
             cube({size:[side_form_size,10,height]}).translate([-side_form_size,-4,0]).setColor(0.2,0.7,0.2),
 
 				// extra forms front bearings holes
-				cube([7,60,height]).translate([-3.5,-55,0]).setColor(0.2,0.7,0.2),
-				cube([7,60,height]).translate([_ZrodsWidth-3.5,-55,0]).setColor(0.2,0.7,0.2)
+				cube([4+7,60,height]).translate([-3.5,-55,0]).setColor(0.2,0.7,0.2),
+				cube([4+7,60,height]).translate([_ZrodsWidth-3.5-3,-55,0]).setColor(0.2,0.7,0.2)
 
 			),
 			// big hole middle
@@ -1396,12 +1398,13 @@ function main(params){
     //_extrusionType = params.extrusionType;
     _extrusionType = 1;
     // update calculated values
-    if(_XYrodsDiam==6){ _XYlmDiam = 12;}
+    if(_XYrodsDiam>=6){ _XYlmDiam = 12;}
     if(_XYrodsDiam>=8){ _XYlmDiam = 15;}
-    if(_ZrodsDiam==6){ _ZlmDiam = 12;}
+    if(_ZrodsDiam>=6){ _ZlmDiam = 12;}
     if(_ZrodsDiam>=8){ _ZlmDiam = 15;}
-    if(_ZrodsDiam==10){ _ZlmDiam = 19;}
-    if(_ZrodsDiam==12){ _ZlmDiam = 21;}
+    if(_ZrodsDiam>=10){ _ZlmDiam = 19;}
+    if(_ZrodsDiam>=12){ _ZlmDiam = 21;}
+    if (_munge>0) { _ZlDiam += 1.5; }
 
 
     _globalDepth = _printableDepth + 110; // = motor support depth + bearings depth + head depth /2
