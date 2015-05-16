@@ -1,6 +1,8 @@
 # smartcore
 the simple and cheap corexy from smartfriendz
 
+Note: this is still a work in progress
+
 # Printrbot Simple
 this branch concerns converting your Printrbot Simple into a smartcore
 
