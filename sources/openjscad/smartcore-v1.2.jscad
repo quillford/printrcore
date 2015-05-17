@@ -54,7 +54,7 @@ var output; // show hide objects  from output choosen in the parameters.
 
 function getParameterDefinitions() {
   return [
-  { name: '_version', caption: 'Version', type: 'text', initial: "1.2 may 10 2015" },
+  { name: '_version', caption: 'Version', type: 'text', initial: "1.2 May 10 2015 (Printrcore)" },
   { 
         name: '_output', 
         caption: 'What to show :', 
@@ -79,11 +79,11 @@ function getParameterDefinitions() {
     },
     { name: '_globalResolution', caption: 'output resolution (16, 24, 32)', type: 'int', initial: 8 },   
   
-    { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 200 },
-    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
-    { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 200 },
+    { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 100 },
+    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 140 },
+    { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
-    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 6},
+    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 8},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 8},
     
     
@@ -819,7 +819,7 @@ function wallSizeText(){
         // right
         text3d("right: "+(_globalDepth+_wallThickness)+" x "+_globalHeight).scale(0.5).rotateX(90).rotateZ(90).translate([_globalWidth/2+_wallThickness+3,0,_globalHeight/2]).setColor(0.2,0.3,0.2),
         // bottom
-        text3d("bottom: "+(_globalWidth+(_wallThickness*2))+" x "+(_globalDepth+_wallThickness)).scale(0.5).translate([0,-_globalDepth/2,_wallThickness]).setColor(0.2,0.3,0.2)
+        text3d("bottom: "+(_globalWidth+(_wallThickness*2))+" x "+(_globalDepth+_wallThickness)).scale(0.5).translate([0,-_globalDepth/2-20,_wallThickness]).setColor(0.2,0.3,0.2)
 
     )
 }
