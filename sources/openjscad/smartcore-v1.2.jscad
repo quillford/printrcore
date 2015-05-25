@@ -24,6 +24,7 @@ var _printableHeight;
 var _wallThickness; // box wood thickness
 var _XYrodsDiam; // usually 6 or 8 .. or 10? 
 var _XYlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
+var _XYlmLength; // lm6uu, lm8uu ... will be calculated from rods diam
 var _ZrodsDiam; // usually 6, 8, 10 or 12 
 var _ZlmDiam; // lm6uu, lm8uu ... will be calculated from rods diam
 var _nemaXYZ;  // nema 14 , nema 17 
@@ -39,7 +40,7 @@ var mk7Diam = 10;
 var beltXAddon = 120; // belt extra length over rod size - bearing guides and difference between bearing edge to end of rod
 var beltYAddon = 30; // belt extra length over y rod size - distance from motor pulley edge to Y rod mount and
 
-// global for work
+/// global for work
 var _bearingsDepth = 35; // hack.need to be cleaned. 
 var headoffset = -50; // used to place the head along X axis
 var XaxisOffset = 0; // used to palce the X axis on Y
@@ -53,7 +54,7 @@ var output; // show hide objects  from output choosen in the parameters.
 
 function getParameterDefinitions() {
   return [
-  { name: '_version', caption: 'Version', type: 'text', initial: "1.2 may 10 2015" },
+  { name: '_version', caption: 'Version', type: 'text', initial: "1.2 May 10 2015 (Printrcore)" },
   { 
         name: '_output', 
         caption: 'What to show :', 
@@ -78,11 +79,11 @@ function getParameterDefinitions() {
     },
     { name: '_globalResolution', caption: 'output resolution (16, 24, 32)', type: 'int', initial: 8 },   
   
-    { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 200 },
-    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 150 },
-    { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 200 },
+    { name: '_printableWidth', caption: 'Print width:', type: 'int', initial: 100 },
+    { name: '_printableHeight', caption: 'Print height :', type: 'int', initial: 140 },
+    { name: '_printableDepth', caption: 'Print depth :', type: 'int', initial: 100 },
     { name: '_wallThickness', caption: 'Box wood thickness:', type: 'int', initial: 10 },
-    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 6},
+    { name: '_XYrodsDiam', caption: 'X Y Rods diameter (6 or 8 ):', type: 'int', initial: 8},
     { name: '_ZrodsDiam', caption: 'Z Rods diameter (6,8,10,12):', type: 'int', initial: 8},
     
     
@@ -363,7 +364,7 @@ function head(){
     var Z = 52;
     var zOffset = 6;
     var xrodOffset = 40;
-    var washer = (X-38)/3; // 19 = lm6 length 
+    var washer = (X-(_XYlmLength*2))/3; // 19 = lm6 length 
     // support screws at  13,23 13,35 35,23 35,35
 
     mesh = difference(
@@ -389,14 +390,14 @@ function head(){
         union(
             cylinder({r:_XYlmDiam/2-1,h:washer,fn:_globalResolution}).rotateY(90).translate([0,Y/2,15+xrodOffset]),
             cube({size:[washer,_XYlmDiam-2,10]}).translate([0,Y/2-_XYlmDiam/2+1,15+xrodOffset]),
-            cylinder({r:_XYlmDiam/2,h:19.1,fn:_globalResolution}).rotateY(90).translate([washer,Y/2,15+xrodOffset]),
-            cube({size:[19.1,_XYlmDiam,10]}).translate([washer,Y/2-_XYlmDiam/2,15+xrodOffset]),
-            cylinder({r:_XYlmDiam/2-1,h:washer,fn:_globalResolution}).rotateY(90).translate([washer+19.1,Y/2,15+xrodOffset]),
-            cube({size:[washer,_XYlmDiam-2,10]}).translate([washer+19.1,Y/2-_XYlmDiam/2+1,15+xrodOffset]),
-            cylinder({r:_XYlmDiam/2,h:19.1,fn:_globalResolution}).rotateY(90).translate([2*washer+19.1,Y/2,15+xrodOffset]),
-            cube({size:[19.1,_XYlmDiam,10]}).translate([2*washer+19.1,Y/2-_XYlmDiam/2,15+xrodOffset]),
-            cylinder({r:_XYlmDiam/2-1,h:washer,fn:_globalResolution}).rotateY(90).translate([2*washer+38.2,Y/2,15+xrodOffset]),
-            cube({size:[washer,_XYlmDiam-2,10]}).translate([2*washer+38.2,Y/2-_XYlmDiam/2+1,15+xrodOffset])
+            cylinder({r:_XYlmDiam/2,h:_XYlmLength+0.1,fn:_globalResolution}).rotateY(90).translate([washer,Y/2,15+xrodOffset]),
+            cube({size:[_XYlmLength+0.1,_XYlmDiam,10]}).translate([washer,Y/2-_XYlmDiam/2,15+xrodOffset]),
+            cylinder({r:_XYlmDiam/2-1,h:washer,fn:_globalResolution}).rotateY(90).translate([washer+_XYlmLength+0.1,Y/2,15+xrodOffset]),
+            cube({size:[washer,_XYlmDiam-2,10]}).translate([washer+_XYlmLength+0.1,Y/2-_XYlmDiam/2+1,15+xrodOffset]),
+            cylinder({r:_XYlmDiam/2,h:_XYlmLength+0.1,fn:_globalResolution}).rotateY(90).translate([2*washer+_XYlmLength+0.1,Y/2,15+xrodOffset]),
+            cube({size:[_XYlmLength+0.1,_XYlmDiam,10]}).translate([2*washer+_XYlmLength+0.1,Y/2-_XYlmDiam/2,15+xrodOffset]),
+            cylinder({r:_XYlmDiam/2-1,h:washer,fn:_globalResolution}).rotateY(90).translate([2*washer+((_XYlmLength+0.1)*2),Y/2,15+xrodOffset]),
+            cube({size:[washer,_XYlmDiam-2,10]}).translate([2*washer+((_XYlmLength+0.1)*2),Y/2-_XYlmDiam/2+1,15+xrodOffset])
             ),
         // head attach holes 
          cylinder({r:1.3,h:22,fn:_globalResolution}).rotateX(-90).translate([14,0,40]),
@@ -818,7 +819,7 @@ function wallSizeText(){
         // right
         text3d("right: "+(_globalDepth+_wallThickness)+" x "+_globalHeight).scale(0.5).rotateX(90).rotateZ(90).translate([_globalWidth/2+_wallThickness+3,0,_globalHeight/2]).setColor(0.2,0.3,0.2),
         // bottom
-        text3d("bottom: "+(_globalWidth+(_wallThickness*2))+" x "+(_globalDepth+_wallThickness)).scale(0.5).translate([0,-_globalDepth/2,_wallThickness]).setColor(0.2,0.3,0.2)
+        text3d("bottom: "+(_globalWidth+(_wallThickness*2))+" x "+(_globalDepth+_wallThickness)).scale(0.5).translate([0,-_globalDepth/2-20,_wallThickness]).setColor(0.2,0.3,0.2)
 
     )
 }
@@ -1219,8 +1220,8 @@ function main(params){
     _nemaXYZ=parseInt(params._nemaXYZ);
     output=parseInt(params._output); 
     // update calculated values 
-    if(_XYrodsDiam==6){ _XYlmDiam = 12.2;}
-    if(_XYrodsDiam==8){ _XYlmDiam = 15.2;}
+    if(_XYrodsDiam==6){ _XYlmDiam = 12.2; _XYlmLength = 19;}
+    if(_XYrodsDiam==8){ _XYlmDiam = 15.2; _XYlmLength = 24;}
     if(_ZrodsDiam==6){ _ZlmDiam = 12.2;}
     if(_ZrodsDiam==8){ _ZlmDiam = 15.2;}
     if(_ZrodsDiam==10){ _ZlmDiam = 19.2;}
