@@ -30,7 +30,10 @@
 # include "Arduino.h"
 #else
 # include "WProgram.h"
-  //Arduino < 1.0.0 does not define this, so we need to do it ourselves
+#endif
+
+// Arduino < 1.0.0 does not define this, so we need to do it ourselves
+#ifndef analogInputToDigitalPin
 # define analogInputToDigitalPin(p) ((p) + A0)
 #endif
 
@@ -66,8 +69,9 @@
 #define SERIAL_PROTOCOLLNPGM(x) (serialprintPGM(PSTR(x)),MYSERIAL.write('\n'))
 
 
-const char errormagic[] PROGMEM ="Error:";
-const char echomagic[] PROGMEM ="echo:";
+extern const char errormagic[] PROGMEM;
+extern const char echomagic[] PROGMEM;
+
 #define SERIAL_ERROR_START (serialprintPGM(errormagic))
 #define SERIAL_ERROR(x) SERIAL_PROTOCOL(x)
 #define SERIAL_ERRORPGM(x) SERIAL_PROTOCOLPGM(x)
@@ -102,7 +106,7 @@ FORCE_INLINE void serialprintPGM(const char *str)
 void get_command();
 void process_commands();
 
-void manage_inactivity();
+void manage_inactivity(bool ignore_stepper_queue=false);
 
 #if defined(DUAL_X_CARRIAGE) && defined(X_ENABLE_PIN) && X_ENABLE_PIN > -1 \
     && defined(X2_ENABLE_PIN) && X2_ENABLE_PIN > -1
@@ -167,7 +171,7 @@ void manage_inactivity();
 #endif
 
 
-enum AxisEnum {X_AXIS=0, Y_AXIS=1, Z_AXIS=2, E_AXIS=3};
+enum AxisEnum {X_AXIS=0, Y_AXIS=1, Z_AXIS=2, E_AXIS=3, X_HEAD=4, Y_HEAD=5};
 
 
 void FlushSerialRequestResend();
@@ -208,7 +212,9 @@ extern float homing_feedrate[];
 extern bool axis_relative_modes[];
 extern int feedmultiply;
 extern int extrudemultiply; // Sets extrude multiply factor (in percent) for all extruders
+extern bool volumetric_enabled;
 extern int extruder_multiply[EXTRUDERS]; // sets extrude multiply factor (in percent) for each extruder individually
+extern float filament_size[EXTRUDERS]; // cross-sectional area of filament (in millimeters), typically around 1.75 or 2.85, 0 disables the volumetric calculations for the extruder.
 extern float volumetric_multiplier[EXTRUDERS]; // reciprocal of cross-sectional area of filament (in square millimeters), stored this way to reduce computational burden in planner
 extern float current_position[NUM_AXIS] ;
 extern float add_homing[3];
@@ -237,9 +243,9 @@ extern unsigned char fanSpeedSoftPwm;
 #endif
 
 #ifdef FILAMENT_SENSOR
-  extern float filament_width_nominal;  //holds the theoretical filament diameter ie., 3.00 or 1.75 
-  extern bool filament_sensor;  //indicates that filament sensor readings should control extrusion  
-  extern float filament_width_meas; //holds the filament diameter as accurately measured 
+  extern float filament_width_nominal;  //holds the theoretical filament diameter ie., 3.00 or 1.75
+  extern bool filament_sensor;  //indicates that filament sensor readings should control extrusion
+  extern float filament_width_meas; //holds the filament diameter as accurately measured
   extern signed char measurement_delay[];  //ring buffer to delay measurement
   extern int delay_index1, delay_index2;  //index into ring buffer
   extern float delay_dist; //delay distance counter
@@ -265,3 +271,6 @@ extern void digipot_i2c_init();
 #endif
 
 #endif
+
+extern void calculate_volumetric_multipliers();
+
